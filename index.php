@@ -13,28 +13,33 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <section class="hero">
-    <h1>Africa University School of Law</h1>
-    <p class="lead">A dedicated home for the School of Law &mdash; showcasing our programmes, faculty, activities, and the community impact of our Law Clinic.</p>
-    <div class="hero-actions">
-        <a class="btn btn-accent" href="law-clinic.php#legal-help-form">Get Legal Help</a>
-        <a class="btn btn-outline" href="programmes.php">Explore Programmes</a>
+    <div class="container">
+        <span class="eyebrow" style="justify-content:center;color:var(--color-gold-light);">Africa University &middot; A United Methodist-Related Institution</span>
+        <h1>Africa University School of Law</h1>
+        <p class="lead">A dedicated home for the School of Law &mdash; showcasing our programmes, faculty, activities, and the community impact of our Law Clinic.</p>
+        <div class="hero-actions">
+            <a class="btn btn-accent" href="law-clinic.php#legal-help-form">Get Legal Help</a>
+            <a class="btn btn-outline" href="programmes.php">Explore Programmes</a>
+        </div>
     </div>
 </section>
 
-<section class="stats-strip">
+<section class="section">
     <div class="container">
-        <div class="grid grid-3">
-            <div>
-                <div class="stat-number">95</div>
-                <div class="stat-label">Students</div>
-            </div>
-            <div>
-                <div class="stat-number">6</div>
-                <div class="stat-label">Faculty Members</div>
-            </div>
-            <div>
-                <div class="stat-number">6</div>
-                <div class="stat-label">Programmes</div>
+        <div class="stats-strip">
+            <div class="grid grid-3">
+                <div>
+                    <div class="stat-number">95</div>
+                    <div class="stat-label">Students</div>
+                </div>
+                <div>
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Faculty Members</div>
+                </div>
+                <div>
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Programmes</div>
+                </div>
             </div>
         </div>
     </div>
@@ -57,7 +62,11 @@ include __DIR__ . '/includes/header.php';
                 <p><a class="btn btn-primary" href="law-clinic.php">Visit the Law Clinic</a></p>
             </div>
             <div>
-                <div class="card-img-placeholder">&#9878;&#65039; Law Clinic</div>
+                <div class="card-img-placeholder" style="height:260px;">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:64px;height:64px;">
+                        <path d="M12 3v18M12 3l-6 3.5M12 3l6 3.5M4 8l-2.5 5a3 3 0 0 0 5.9 0L5 8m14 0l-2.4 5a3 3 0 0 0 5.9 0L20 8M4 21h16" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
             </div>
         </div>
     </div>
@@ -93,11 +102,13 @@ include __DIR__ . '/includes/header.php';
                 <div class="carousel-track">
                     <?php foreach ($latest_news as $i => $item): ?>
                         <div class="carousel-slide">
-                            <span class="badge <?= $item['category'] === 'event' ? 'badge-event' : 'badge-news' ?>"><?= h(ucfirst($item['category'])) ?></span>
-                            <h3><?= h($item['title']) ?></h3>
-                            <p><?= h($item['summary']) ?></p>
-                            <p><small><?= h(format_date($item['entry_date'])) ?></small></p>
-                            <p><a href="news-detail.php?id=<?= (int) $item['id'] ?>">Read More &rarr;</a></p>
+                            <div class="carousel-slide-inner">
+                                <span class="badge <?= $item['category'] === 'event' ? 'badge-event' : 'badge-news' ?>"><?= h(ucfirst($item['category'])) ?></span>
+                                <h3><?= h($item['title']) ?></h3>
+                                <p><?= h($item['summary']) ?></p>
+                                <p><small><?= h(format_date($item['entry_date'])) ?></small></p>
+                                <p><a href="news-detail.php?id=<?= (int) $item['id'] ?>">Read More &rarr;</a></p>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -111,11 +122,13 @@ include __DIR__ . '/includes/header.php';
     </div>
 </section>
 
-<section class="hero">
-    <h2>Get in Touch</h2>
-    <p class="lead">Have a question about admissions, programmes, or the Law Clinic? We would love to hear from you.</p>
-    <div class="hero-actions">
-        <a class="btn btn-outline" href="contact.php">Contact Us</a>
+<section class="hero" style="padding: var(--space-6) 0;">
+    <div class="container">
+        <h2 style="color: var(--color-white);">Get in Touch</h2>
+        <p class="lead">Have a question about admissions, programmes, or the Law Clinic? We would love to hear from you.</p>
+        <div class="hero-actions">
+            <a class="btn btn-outline" href="contact.php">Contact Us</a>
+        </div>
     </div>
 </section>
 

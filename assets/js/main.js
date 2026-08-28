@@ -11,6 +11,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initActiveNavLink();
+  initNavbarScroll();
+  initScrollReveal();
+  initStatCounters();
   initNewsCarousel();
   initNewsFilterTabs();
   initFormValidation();
@@ -74,7 +77,113 @@ function initActiveNavLink() {
 }
 
 /* -----------------------------------------------------------------------
- * 3. Simple news carousel (home page)
+ * 3. Navbar shrink / solidify on scroll
+ * ---------------------------------------------------------------------*/
+function initNavbarScroll() {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  const updateState = () => {
+    navbar.classList.toggle('is-scrolled', window.scrollY > 12);
+  };
+
+  updateState();
+  window.addEventListener('scroll', updateState, { passive: true });
+}
+
+/* -----------------------------------------------------------------------
+ * 4. Scroll-reveal animations
+ *    Automatically treats page sections and cards as fade-up targets —
+ *    no per-page markup changes required. Falls back to showing everything
+ *    immediately if IntersectionObserver isn't available.
+ * ---------------------------------------------------------------------*/
+function initScrollReveal() {
+  const targets = document.querySelectorAll(
+    '.section > .container > *, .card, .card-news, .card-faculty, .card-service, .card-programme, .stats-strip'
+  );
+  if (targets.length === 0) return;
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach((el) => el.classList.add('reveal', 'is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  targets.forEach((el, index) => {
+    el.classList.add('reveal');
+    // Small staggered delay within each group so grids fade in as a cascade
+    // rather than all at once.
+    el.style.transitionDelay = `${(index % 4) * 80}ms`;
+    observer.observe(el);
+  });
+}
+
+/* -----------------------------------------------------------------------
+ * 5. Animated stat counters (e.g. "95 Students", "150+ Assisted")
+ *    Reads the target number out of the element's own text, animates from
+ *    0 up to it once it scrolls into view, and re-appends any non-numeric
+ *    suffix (like "+") that was present in the original text.
+ * ---------------------------------------------------------------------*/
+function initStatCounters() {
+  const counters = document.querySelectorAll('.stat-number');
+  if (counters.length === 0) return;
+
+  const animateCounter = (el) => {
+    const raw = el.textContent.trim();
+    const match = raw.match(/^([\d,]+)(.*)$/);
+    if (!match) return; // Not a numeric stat (leave as-is)
+
+    const target = parseInt(match[1].replace(/,/g, ''), 10);
+    const suffix = match[2] || '';
+    if (isNaN(target)) return;
+
+    const duration = 1200;
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const value = Math.round(target * eased);
+      el.textContent = value.toLocaleString() + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    counters.forEach(animateCounter);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  counters.forEach((el) => observer.observe(el));
+}
+
+/* -----------------------------------------------------------------------
+ * 6. Simple news carousel (home page)
  * ---------------------------------------------------------------------*/
 function initNewsCarousel() {
   const carousel = document.getElementById('newsCarousel');
@@ -126,7 +235,7 @@ function initNewsCarousel() {
 }
 
 /* -----------------------------------------------------------------------
- * 4. News filter tabs (news.php) — progressive enhancement only.
+ * 7. News filter tabs (news.php) — progressive enhancement only.
  *    The page already filters via URL query params without JS; this just
  *    makes tab clicks instant, without a page reload.
  * ---------------------------------------------------------------------*/
@@ -159,7 +268,7 @@ function initNewsFilterTabs() {
 }
 
 /* -----------------------------------------------------------------------
- * 5. Shared form validation helper
+ * 8. Shared form validation helper
  *    UX convenience only — NOT a security boundary. The server
  *    independently re-validates every field regardless of what happens
  *    here; this just gives the visitor faster, in-page feedback.

@@ -31,7 +31,12 @@ include __DIR__ . '/includes/header.php';
     <div class="container">
         <div class="grid grid-2">
             <div>
-                <div class="card-img-placeholder">&#128100;</div>
+                <div class="card-img-placeholder" style="height:260px;">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:60px;height:60px;">
+                        <circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="1.4"/>
+                        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
+                </div>
             </div>
             <div>
                 <h2>A Welcome from the Dean</h2>

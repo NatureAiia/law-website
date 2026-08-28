@@ -44,7 +44,12 @@ include __DIR__ . '/includes/header.php';
             <div class="grid grid-3">
                 <?php foreach ($items as $item): ?>
                     <div class="card-news" data-category="<?= h($item['category']) ?>">
-                        <div class="card-img-placeholder">📰</div>
+                        <div class="card-img-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:36px;height:36px;">
+                                <rect x="3" y="5" width="18" height="14" rx="2" stroke="#fff" stroke-width="1.4"/>
+                                <path d="M7 9h10M7 12.5h10M7 16h6" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+                            </svg>
+                        </div>
                         <div class="card-body">
                             <span class="badge badge-<?= h($item['category']) ?>"><?= h(ucfirst($item['category'])) ?></span>
                             <h3><?= h($item['title']) ?></h3>

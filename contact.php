@@ -21,13 +21,13 @@ include __DIR__ . '/includes/header.php';
             <div class="card">
                 <h3>Main Campus</h3>
                 <p>Old Mutare, Zimbabwe</p>
-                <p>Phone: <a href="tel:+263 8688002151">+263 8688002151</a></p>
+                <p>Phone: <a href="tel:+2638688002151">+263 8688002151</a></p>
                 <p>Email: <a href="mailto:info@africau.edu">info@africau.edu</a></p>
             </div>
             <div class="card">
                 <h3>AU Global Campus</h3>
                 <p>Harare, Zimbabwe</p>
-                <p>Phone: <a href="tel:+263 778879492">+263 778879492</a></p>
+                <p>Phone: <a href="tel:+263778879492">+263 778879492</a></p>
                 <p>Email: <a href="mailto:globalcampus@africau.edu">globalcampus@africau.edu</a></p>
             </div>
         </div>
